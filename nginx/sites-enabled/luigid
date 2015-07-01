@@ -1,0 +1,22 @@
+server {
+
+    listen 80;
+    server_name luigid.streemalabs.com;
+    charset utf-8;
+
+    location /js {
+        alias /usr/local/lib/python2.7/dist-packages/luigi/static/visualiser/js;
+    }
+
+    location /lib {
+        alias /usr/local/lib/python2.7/dist-packages/luigi/static/visualiser/lib;
+    }
+
+    location /index.html {
+        proxy_pass http://luigid:8082/static/visualiser/index.html;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+}

@@ -1,0 +1,37 @@
+luigid:
+  restart: always
+  build: ./luigid/
+  expose:
+    - "8082:8082"
+  links:
+    - mysql:mysql
+  volumes:
+    - /usr/local/lib/python2.7/dist-packages/luigi/static/visualiser
+
+nginx:
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  volumes_from:
+    - luigid
+  links:
+    - luigid:luigid
+
+mysql:
+  restart: always
+  image: tutum/mysql:latest
+  volumes_from:
+    - data
+  ports:
+    - "3306:3306"
+  environment:
+    ON_CREATE_DB: luigid
+    MYSQL_PASS: lu1g1p4ss
+
+data:
+  restart: always
+  image: ubuntu:latest
+  volumes:
+    - /var/lib/mysql
+  command: true
