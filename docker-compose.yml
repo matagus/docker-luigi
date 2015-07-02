@@ -6,7 +6,7 @@ luigid:
   links:
     - mysql:mysql
   volumes:
-    - /usr/local/lib/python2.7/dist-packages/luigi/static/visualiser
+    - /usr/local/lib/python2.7/site-packages/luigi/static/visualiser
 
 nginx:
   restart: always
@@ -20,14 +20,16 @@ nginx:
 
 mysql:
   restart: always
-  image: tutum/mysql:latest
+  image: mysql:latest
   volumes_from:
     - data
   ports:
     - "3306:3306"
   environment:
-    ON_CREATE_DB: luigid
-    MYSQL_PASS: lu1g1p4ss
+    MYSQL_DATABASE: luigid
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: lu1g1p4ss
+    MYSQL_ROOT_PASSWORD: root
 
 data:
   restart: always
