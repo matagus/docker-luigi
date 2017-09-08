@@ -2,7 +2,7 @@ luigid:
   restart: always
   build: ./luigid/
   expose:
-    - "8082:8082"
+    - "8082"
   links:
     - mysql:mysql
   volumes:
@@ -36,4 +36,4 @@ data:
   image: ubuntu:latest
   volumes:
     - /var/lib/mysql
-  command: true
+  command: 'true'
